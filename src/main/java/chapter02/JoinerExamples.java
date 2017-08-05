@@ -2,6 +2,11 @@ package chapter02;
 
 import com.google.common.base.Joiner;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class JoinerExamples {
@@ -25,5 +30,18 @@ public class JoinerExamples {
 
     public static String buildStringWithJoiner(List<String> stringList, String delimiter, String userForNull) {
         return Joiner.on(delimiter).useForNull(userForNull).join(stringList);
+    }
+
+    public static StringBuilder appendToStringBuilder(String...args) {
+       return stringJoiner.appendTo(new StringBuilder(), args);
+    }
+
+    public static FileWriter appendToFileWriter(String path, List<LocalDate> dateList) {
+        try (FileWriter fileWriter = new FileWriter(new File(path))) {
+            return Joiner.on("#").useForNull(" ").appendTo(fileWriter, dateList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
