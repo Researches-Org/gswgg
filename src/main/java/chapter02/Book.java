@@ -59,7 +59,7 @@ public final class Book implements Comparable<Book> {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(title, author, publisher, isbn)
+        return Objects.hashCode(title, author, publisher, isbn);
     }
 
     @Override
