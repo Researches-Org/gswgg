@@ -1,0 +1,1 @@
+This repository contains code based on the book Getting Stated with Google Guava [Getting Stated with Google Guava](https://www.amazon.com/Getting-Started-Google-Guava-Bejeck/dp/1783280158).
