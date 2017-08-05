@@ -1,5 +1,6 @@
 package chapter02;
 
+import com.google.common.base.Joiner;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,6 +34,30 @@ public class JoinerExamplesTest {
         String expected = "a|b";
 
         Assert.assertThat(JoinerExamples.buildStringWithJoiner(stringList, "|"), Is.is(expected));
+    }
+
+    @Test
+    public void testBuildStringWithJoinerWithUseForNullsPresent() {
+        List<String> stringList = new ArrayList<>();
+        stringList.add("a");
+        stringList.add(null);
+        stringList.add("b");
+
+        String expected = "a|no value|b";
+
+        Assert.assertThat(JoinerExamples.buildStringWithJoiner(stringList, "|", "no value"), Is.is(expected));
+    }
+
+    @Test
+    public void testStringJoiner() {
+        List<String> stringList = new ArrayList<>();
+        stringList.add("a");
+        stringList.add(null);
+        stringList.add("b");
+
+        String expected = "a|b";
+
+        Assert.assertThat(JoinerExamples.stringJoiner.join(stringList), Is.is(expected));
     }
 
 }
