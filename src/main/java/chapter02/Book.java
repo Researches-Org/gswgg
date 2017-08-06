@@ -13,13 +13,13 @@ public final class Book implements Comparable<Book> {
     private String isbn;
     private double price;
 
-    public Book(String a, String t, String pu, String i, double pr) {
-        author = checkNotNull(a, "author can't be null");
-        title = checkNotNull(t, "title can't be null");
-        publisher = checkNotNull(pu, "publisher can' be null");
-        isbn = checkNotNull(i, "isbn can' be null");
-        checkArgument(pr > 0, "price can' be less or equal to zero");
-        price = pr;
+    public Book(String author, String title, String publisher, String isbn, double price) {
+        this.author = checkNotNull(author, "author can't be null");
+        this.title = checkNotNull(title, "title can't be null");
+        this.publisher = checkNotNull(publisher, "publisher can' be null");
+        this.isbn = checkNotNull(isbn, "isbn can' be null");
+        checkArgument(price > 0, "price can' be less or equal to zero");
+        this.price = price;
     }
 
     public String getTitle() {
