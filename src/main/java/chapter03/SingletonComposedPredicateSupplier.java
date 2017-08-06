@@ -4,8 +4,6 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 
-import java.util.concurrent.TimeUnit;
-
 public final class SingletonComposedPredicateSupplier implements Supplier<Predicate<String>> {
 
     private final Supplier<Predicate<String>> supplier = Suppliers.memoize(new ComposedPredicateSupplier());
