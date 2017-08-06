@@ -13,9 +13,16 @@ public final class City {
 
     private final int population;
 
-    public City(String name, String zipCode, int population) {
+    private final Climate climate;
+
+    private final double averageRainfall;
+
+    public City(String name, String zipCode, int population, Climate climate, double averageRainfall) {
         this.name = checkNotNull(name, "name can't be null");
-        this.zipCode = checkNotNull(zipCode, "zipCode can' be null");
+        this.zipCode = checkNotNull(zipCode, "zipCode can't be null");
+        this.climate = checkNotNull(climate, "climate can't be null");
+        checkArgument(averageRainfall > 0, "averageRainFall can't be less or equal to zero");
+        this.averageRainfall = averageRainfall;
         checkArgument(population > 0, "population can't be equal or less than zero");
         this.population = population;
     }
@@ -32,9 +39,17 @@ public final class City {
         return population;
     }
 
+    public Climate getClimate() {
+        return climate;
+    }
+
+    public double getAverageRainfall() {
+        return averageRainfall;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, zipCode, population);
+        return Objects.hashCode(name, zipCode, population, climate, averageRainfall);
     }
 
     @Override
@@ -45,7 +60,9 @@ public final class City {
         City other = (City) obj;
         return Objects.equal(name, other.getName())
                 && Objects.equal(zipCode, other.getZipCode())
-                && Objects.equal(population, other.getPopulation());
+                && Objects.equal(population, other.getPopulation())
+                && Objects.equal(climate, other.getClimate())
+                && Objects.equal(averageRainfall, other.getAverageRainfall());
     }
 
     @Override
@@ -54,6 +71,8 @@ public final class City {
                 .add("name", name)
                 .add("zipCode", zipCode)
                 .add("population", population)
+                .add("climate", climate)
+                .add("averageRainfall", averageRainfall)
                 .toString();
     }
 }

@@ -22,13 +22,13 @@ public class FunctionsExamplesTest {
         stateMap = new HashMap<>();
 
         State NY = new State("New York", "NY");
-        NY.addCity(new City("New York", "zip1", 100));
-        NY.addCity(new City("Albany", "zip2", 50));
+        NY.addCity(new City("New York", "zip1", 100, Climate.CONTINENTAL, 10));
+        NY.addCity(new City("Albany", "zip2", 50, Climate.CONTINENTAL, 10));
         stateMap.put("NY", NY);
 
         State CA = new State("California", "CA");
-        CA.addCity(new City("Mountain View", "zip3", 20));
-        CA.addCity(new City("San Francisco", "zip4", 30));
+        CA.addCity(new City("Mountain View", "zip3", 20, Climate.CONTINENTAL, 10));
+        CA.addCity(new City("San Francisco", "zip4", 30, Climate.CONTINENTAL, 10));
         stateMap.put("CA", CA);
     }
 
@@ -49,7 +49,10 @@ public class FunctionsExamplesTest {
 
         Function<String, String> composed = Functions.compose(stateFunction, lookup);
 
-        String expected = "City{name=Albany, zipCode=zip2, population=50},City{name=New York, zipCode=zip1, population=100}";
+        String expected = "City{name=Albany, zipCode=zip2, population=50, climate=CONTINENTAL, averageRainfall=10.0}," +
+                "City{name=New York, " +
+                "zipCode=zip1," +
+                " population=100, climate=CONTINENTAL, averageRainfall=10.0}";
 
         String result = composed.apply("NY");
 
