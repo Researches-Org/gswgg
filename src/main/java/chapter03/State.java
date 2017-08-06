@@ -2,6 +2,8 @@ package chapter03;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
+import com.sun.org.apache.regexp.internal.RE;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -14,11 +16,20 @@ public final class State {
 
     private final String code;
 
+    private final Region region;
+
     private Set<City> mainCities = new HashSet<>();
 
-    public State(String name, String code) {
-        this.name = checkNotNull(name, "name can' be null");
-        this.code = checkNotNull(code, "code can' be null");
+    public State(String name, String code, Region region) {
+        this.name = checkNotNull(name, "name can't be null");
+        this.code = checkNotNull(code, "code can't be null");
+        this.region = checkNotNull(region, "region can't be null");
+    }
+
+    public State(String name, String code, Region region, Set<City> mainCities) {
+        this(name, code, region);
+        checkNotNull(mainCities, "main cities can't be null");
+        this.mainCities = Sets.newHashSet(mainCities);
     }
 
     public Set<City> getMainCities() {
@@ -38,9 +49,13 @@ public final class State {
         return code;
     }
 
+    public Region getRegion() {
+        return region;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, code);
+        return Objects.hashCode(name, code, region);
     }
 
     @Override
@@ -50,7 +65,8 @@ public final class State {
         if (obj.getClass() != getClass()) return false;
         State other = (State) obj;
         return Objects.equal(name, other.getName())
-                && Objects.equal(code, other.getCode());
+                && Objects.equal(code, other.getCode())
+                && Objects.equal(region, other.getRegion());
     }
 
     @Override
@@ -58,6 +74,7 @@ public final class State {
         return MoreObjects.toStringHelper(this)
                 .add("name", name)
                 .add("code", code)
+                .add("region", region)
                 .toString();
     }
 }

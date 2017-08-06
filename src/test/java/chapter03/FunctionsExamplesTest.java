@@ -2,34 +2,42 @@ package chapter03;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Maps;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by manoel on 8/5/17.
- */
 public class FunctionsExamplesTest {
 
     private static Map<String, State> stateMap;
 
     @BeforeClass
     public static void setUp() {
-        stateMap = new HashMap<>();
+        stateMap = Maps.newLinkedHashMap();
 
-        State NY = new State("New York", "NY");
+        State NY = new State("New York", "NY", Region.MIDWEST);
         NY.addCity(new City("New York", "zip1", 100, Climate.CONTINENTAL, 10));
         NY.addCity(new City("Albany", "zip2", 50, Climate.CONTINENTAL, 10));
         stateMap.put("NY", NY);
 
-        State CA = new State("California", "CA");
+        State CA = new State("California", "CA", Region.WEST);
         CA.addCity(new City("Mountain View", "zip3", 20, Climate.CONTINENTAL, 10));
         CA.addCity(new City("San Francisco", "zip4", 30, Climate.CONTINENTAL, 10));
         stateMap.put("CA", CA);
+    }
+
+    @Test
+    public void testComposePredicate() {
+        Function<String, State> lookup = Functions.forMap(stateMap);
+
+        Predicate<String> p = Predicates.compose(new SouthwestOrMidwestRegionPredicate(), lookup);
+
+        Assert.assertTrue(p.apply("NY"));
     }
 
     @Test

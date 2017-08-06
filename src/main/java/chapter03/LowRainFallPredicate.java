@@ -1,7 +1,13 @@
 package chapter03;
 
-/**
- * Created by manoel on 8/6/17.
- */
-public class LowRainFallPredicate {
+import com.google.common.base.Predicate;
+
+import javax.annotation.Nullable;
+
+public class LowRainFallPredicate implements Predicate<City> {
+
+    @Override
+    public boolean apply(@Nullable City city) {
+        return city.getAverageRainfall() < 45.7;
+    }
 }
