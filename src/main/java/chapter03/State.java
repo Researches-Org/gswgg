@@ -18,7 +18,7 @@ public final class State {
 
     private final Region region;
 
-    private Set<City> mainCities = new HashSet<>();
+    private Set<City> mainCities = Sets.newLinkedHashSet();
 
     public State(String name, String code, Region region) {
         this.name = checkNotNull(name, "name can't be null");
@@ -29,7 +29,7 @@ public final class State {
     public State(String name, String code, Region region, Set<City> mainCities) {
         this(name, code, region);
         checkNotNull(mainCities, "main cities can't be null");
-        this.mainCities = Sets.newHashSet(mainCities);
+        this.mainCities = Sets.newLinkedHashSet();
     }
 
     public Set<City> getMainCities() {

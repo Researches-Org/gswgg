@@ -21,8 +21,8 @@ public class FunctionsExamplesTest {
         stateMap = Maps.newLinkedHashMap();
 
         State NY = new State("New York", "NY", Region.MIDWEST);
-        NY.addCity(new City("New York", "zip1", 100, Climate.CONTINENTAL, 10));
         NY.addCity(new City("Albany", "zip2", 50, Climate.CONTINENTAL, 10));
+        NY.addCity(new City("New York", "zip1", 100, Climate.CONTINENTAL, 10));
         stateMap.put("NY", NY);
 
         State CA = new State("California", "CA", Region.WEST);
@@ -57,14 +57,18 @@ public class FunctionsExamplesTest {
 
         Function<String, String> composed = Functions.compose(stateFunction, lookup);
 
-        String expected = "City{name=Albany, zipCode=zip2, population=50, climate=CONTINENTAL, averageRainfall=10.0}," +
+        String expected1 = "City{name=Albany, zipCode=zip2, population=50, climate=CONTINENTAL, " +
+                "averageRainfall=10.0}," +
                 "City{name=New York, " +
                 "zipCode=zip1," +
                 " population=100, climate=CONTINENTAL, averageRainfall=10.0}";
 
+        String expected2 = "City{name=New York, zipCode=zip1, population=100, climate=CONTINENTAL, " +
+                "averageRainfall=10.0},City{name=Albany, zipCode=zip2, population=50, climate=CONTINENTAL, averageRainfall=10.0}";
+
         String result = composed.apply("NY");
 
-        Assert.assertThat(result, Is.is(expected));
+        Assert.assertThat(result.equals(expected1) || result.equals(expected2), Is.is(true));
     }
 
 }
