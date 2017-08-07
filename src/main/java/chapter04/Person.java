@@ -3,8 +3,9 @@ package chapter04;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ComparisonChain;
 
-public class Person {
+public class Person implements Comparable<Person> {
 
     private final String name;
 
@@ -65,5 +66,15 @@ public class Person {
                 .add("age", age)
                 .add("gender", gender)
                 .toString();
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return ComparisonChain.start()
+                .compare(name, o.getName())
+                .compare(surname, o.getSurname())
+                .compare(age, o.getAge())
+                .compare(gender, o.getGender())
+                .result();
     }
 }
