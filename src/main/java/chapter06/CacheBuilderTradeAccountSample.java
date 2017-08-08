@@ -3,6 +3,7 @@ package chapter06;
 import com.google.common.base.Ticker;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 
 import java.util.concurrent.ExecutionException;
@@ -26,6 +27,7 @@ public class CacheBuilderTradeAccountSample {
                 .maximumSize(5000L)
                 .removalListener(new TradeAccountRemovalListener())
                 .ticker(Ticker.systemTicker())
+                .recordStats()
                 .build(new CacheLoader<String, TradeAccount>() {
                     @Override
                     public TradeAccount load(String id) throws Exception {
@@ -45,6 +47,15 @@ public class CacheBuilderTradeAccountSample {
             TradeAccount tradeAccount = cbs.getTradeAccountCache().get(i + "");
             System.out.println(tradeAccount);
         }
+
+        CacheStats cacheStats = cbs.getTradeAccountCache().stats();
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>> Cache Stats <<<<<<<<<<<<<<<<<");
+        System.out.println("Average time spent loading new values.............: " + cacheStats.averageLoadPenalty());
+        System.out.println("Fraction of requests to the cache that were hits..: " + cacheStats.hitCount());
+        System.out.println("Fraction of requests to the cache that were misses: " + cacheStats.missCount());
+        System.out.println("Number of evictions made by the cache.............: " + cacheStats.evictionCount());
+
     }
 
 
