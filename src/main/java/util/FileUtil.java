@@ -1,5 +1,7 @@
 package util;
 
+import com.google.common.io.Files;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,6 +29,22 @@ public class FileUtil {
         File file = new File(path);
         if (file.exists()) {
             file.delete();
+        }
+    }
+
+    public static void copy(String original, String copy) {
+        try{
+            Files.copy(new File(original), new File(copy));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void move(String original, String newFile) {
+        try {
+            Files.move(new File(original), new File(newFile));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
